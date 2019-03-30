@@ -33,9 +33,9 @@ class LoginForm extends React.Component {
                 <input type="email" id="inputEmail"
                        className="form-control"
                        placeholder="Email address"
-                       required=""
-                       autoFocus=""
-                       onChange={handleEmailChange}/>
+                       onChange={handleEmailChange}
+                       required
+                       autoFocus/>
                 <label htmlFor="inputPassword"
                        className="sr-only">Password</label>
                 <input type="password"
