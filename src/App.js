@@ -9,6 +9,8 @@ class App extends Component {
     this.state = {
       email: "",
       password: "",
+      isEmailValid: false,
+      isPasswordValid: false,
       isAuthenticated: isAuth
     };
   }
@@ -16,33 +18,44 @@ class App extends Component {
   handleSubmitForm = event => {
     const { email, password } = this.state;
 
-    fetch("http://localhost:3030/login", {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      },
-      method: "POST",
-      body: JSON.stringify({ email, password })
-    })
-      .then(response => {
-        return response.json();
+    if (this.state.isEmailValid && this.state.isPasswordValid) {
+      fetch("http://localhost:3030/login", {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        method: "POST",
+        body: JSON.stringify({ email, password })
       })
-      .then(data => {
-        console.log(data);
-      });
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+        });
+    } else {
+      // TODO : message à l'utilisateur
+    }
 
     event.preventDefault();
   };
 
   handleEmailChange = event => {
+    const input = event.target;
+
     this.setState({
-      email: event.target.value
+      email: input.value,
+      isEmailValid: input.validity.valid
     });
   };
 
   handlePasswordChange = event => {
+    const { value } = event.target;
+    const validity = value.length > 3;
+
     this.setState({
-      password: event.target.value
+      password: value,
+      isPasswordValid: validity
     });
   };
 
