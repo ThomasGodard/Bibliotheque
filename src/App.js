@@ -19,7 +19,7 @@ class App extends Component {
     const { email, password } = this.state;
 
     if (this.state.isEmailValid && this.state.isPasswordValid) {
-      fetch("http://localhost:3030/login", {
+      fetch("http://localhost:3030/users/login", {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*"
