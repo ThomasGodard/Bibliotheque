@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
-import Login from "./Login";
+import Login from "./views/login/Login";
+import Signup from "./views/signup/Signup";
 
 class App extends Component {
   constructor(props) {
@@ -72,6 +73,10 @@ class App extends Component {
               onPasswordChange={this.handlePasswordChange}
             />
           )}
+        />
+        <Route
+          path="/signup"
+          component={Signup}
         />
 
         {this.state.isAuthenticated && <h1>MENU</h1>}

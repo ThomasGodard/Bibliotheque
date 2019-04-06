@@ -1,6 +1,6 @@
 import React from "react";
 import "./Login.css";
-import LoginForm from "./LoginForm";
+import LoginForm from "./loginForm/LoginForm";
 
 class Login extends React.Component {
   render() {
@@ -8,6 +8,8 @@ class Login extends React.Component {
     const handleSubmitForm = this.props.onClick;
     const handleEmailChange = this.props.onEmailChange;
     const handlePasswordChange = this.props.onPasswordChange;
+
+    console.log(location);
 
     return (
       <div className="login-body text-center">

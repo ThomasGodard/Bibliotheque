@@ -1,6 +1,6 @@
 import React from 'react';
 import './LoginForm.css'
-import logo from "./bookshelf.svg";
+import logo from "../../../assets/bookshelf.svg";
 import {Redirect} from "react-router-dom";
 
 class LoginForm extends React.Component {
