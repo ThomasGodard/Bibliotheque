@@ -2,6 +2,7 @@ import React from 'react';
 import './LoginForm.css'
 import logo from "../../../assets/bookshelf.svg";
 import {Link, Redirect} from "react-router-dom";
+import userService from "../../../services/userService"
 
 class LoginForm extends React.Component {
 
@@ -24,20 +25,11 @@ class LoginForm extends React.Component {
     const { email, password } = this.state;
 
     if (this.state.isEmailValid && this.state.isPasswordValid) {
-      fetch("http://localhost:3030/users/login", {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        },
-        method: "POST",
-        body: JSON.stringify({ email, password })
-      })
-        .then(response => {
-          return response.json();
-        })
+      let user;
+      userService.getUser(email, password)
         .then(data => {
-          this.props.onLogin(data);
-          this.setState({redirectToReferrer: true});
+          user = data;
+          console.log(user);
         });
     } else {
       // TODO : message à l'utilisateur
