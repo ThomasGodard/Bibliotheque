@@ -4,10 +4,7 @@ import LoginForm from "./loginForm/LoginForm";
 
 class Login extends React.Component {
   render() {
-    const { location } = this.props;
-    const handleSubmitForm = this.props.onClick;
-    const handleEmailChange = this.props.onEmailChange;
-    const handlePasswordChange = this.props.onPasswordChange;
+    const { location, onLogin: handleLogin } = this.props;
 
     console.log("location", location);
 
@@ -16,9 +13,7 @@ class Login extends React.Component {
         {location.pathname === '/login' && (
           <LoginForm
             location={location}
-            onClick={handleSubmitForm}
-            onEmailChange={handleEmailChange}
-            onPasswordChange={handlePasswordChange}
+            onLogin={handleLogin}
           />
         )}
       </div>

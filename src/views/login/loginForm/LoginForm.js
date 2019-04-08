@@ -5,22 +5,70 @@ import {Link, Redirect} from "react-router-dom";
 
 class LoginForm extends React.Component {
 
+  onLogin = this.props.onLogin;
+
   constructor(props) {
     super(props);
     this.state = {
+      email: "",
+      password: "",
+      isEmailValid: false,
+      isPasswordValid: false,
       rememberMe: false,
       redirectToReferrer: false,
       isLoading: false
-    }
+    };
   }
+
+  handleSubmitForm = event => {
+    const { email, password } = this.state;
+
+    if (this.state.isEmailValid && this.state.isPasswordValid) {
+      fetch("http://localhost:3030/users/login", {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        method: "POST",
+        body: JSON.stringify({ email, password })
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          this.props.onLogin(data);
+          this.setState({redirectToReferrer: true});
+        });
+    } else {
+      // TODO : message à l'utilisateur
+    }
+
+    event.preventDefault();
+  };
+
+  handleEmailChange = event => {
+    const input = event.target;
+
+    this.setState({
+      email: input.value,
+      isEmailValid: input.validity.valid
+    });
+  };
+
+  handlePasswordChange = event => {
+    const { value } = event.target;
+    const validity = value.length > 3;
+
+    this.setState({
+      password: value,
+      isPasswordValid: validity
+    });
+  };
 
   render() {
 
     let { from } = this.props.location.state || { from: { pathname: "/" } };
     let { redirectToReferrer } = this.state;
-    const handleSubmitForm = this.props.onClick;
-    const handleEmailChange = this.props.onEmailChange;
-    const handlePasswordChange = this.props.onPasswordChange;
 
     if (redirectToReferrer) return <Redirect to={from} />;
 
@@ -33,7 +81,7 @@ class LoginForm extends React.Component {
         <input type="email" id="inputEmail"
                className="form-control"
                placeholder="Email address"
-               onChange={handleEmailChange}
+               onChange={this.handleEmailChange}
                required
                autoFocus/>
         <label htmlFor="inputPassword"
@@ -43,7 +91,7 @@ class LoginForm extends React.Component {
                className="form-control"
                placeholder="Password"
                required=""
-               onChange={handlePasswordChange}/>
+               onChange={this.handlePasswordChange}/>
         <div className="checkbox mb-3">
           <label>
             <input type="checkbox"
@@ -52,7 +100,7 @@ class LoginForm extends React.Component {
         </div>
         <button className="btn btn-lg btn-primary btn-block"
                 type="submit"
-                onClick={handleSubmitForm}>Sign in</button>
+                onClick={this.handleSubmitForm}>Sign in</button>
         <p className="text-left mt-2">Pas de compte ? - <Link to="/signup">Créer un compte</Link></p>
         <p className="mt-5 mb-3 text-muted">© 2017-2019</p>
       </form>

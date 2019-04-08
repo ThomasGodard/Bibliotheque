@@ -8,56 +8,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      isEmailValid: false,
-      isPasswordValid: false,
+      user: {},
       isAuthenticated: isAuth
     };
   }
 
-  handleSubmitForm = event => {
-    const { email, password } = this.state;
-
-    if (this.state.isEmailValid && this.state.isPasswordValid) {
-      fetch("http://localhost:3030/users/login", {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        },
-        method: "POST",
-        body: JSON.stringify({ email, password })
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          console.log(data);
-        });
-    } else {
-      // TODO : message à l'utilisateur
-    }
-
-    event.preventDefault();
-  };
-
-  handleEmailChange = event => {
-    const input = event.target;
-
-    this.setState({
-      email: input.value,
-      isEmailValid: input.validity.valid
-    });
-  };
-
-  handlePasswordChange = event => {
-    const { value } = event.target;
-    const validity = value.length > 3;
-
-    this.setState({
-      password: value,
-      isPasswordValid: validity
-    });
+  handleLogin = (data) => {
+    console.log("App", data);
+    isAuth = true;
   };
 
   render() {
@@ -65,13 +23,11 @@ class App extends Component {
       <BrowserRouter>
         <Route
           path="/login"
-          render={props => (
-            <Login
-              {...props}
-              onClick={this.handleSubmitForm}
-              onEmailChange={this.handleEmailChange}
-              onPasswordChange={this.handlePasswordChange}
-            />
+          render={ props => (
+           <Login
+             {...props}
+              onLogin={this.handleLogin}
+           />
           )}
         />
         <Route
