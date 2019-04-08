@@ -9,16 +9,18 @@ class Login extends React.Component {
     const handleEmailChange = this.props.onEmailChange;
     const handlePasswordChange = this.props.onPasswordChange;
 
-    console.log(location);
+    console.log("location", location);
 
     return (
       <div className="login-body text-center">
-        <LoginForm
-          location={location}
-          onClick={handleSubmitForm}
-          onEmailChange={handleEmailChange}
-          onPasswordChange={handlePasswordChange}
-        />
+        {location.pathname === '/login' && (
+          <LoginForm
+            location={location}
+            onClick={handleSubmitForm}
+            onEmailChange={handleEmailChange}
+            onPasswordChange={handlePasswordChange}
+          />
+        )}
       </div>
     );
   }

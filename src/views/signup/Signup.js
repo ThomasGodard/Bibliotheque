@@ -11,7 +11,6 @@ class Signup extends React.Component {
   }
 
   render() {
-    console.log(this.props.location);
     return (
       <div className="login-body text-center">
         <form className="form-signin">
