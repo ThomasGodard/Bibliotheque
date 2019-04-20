@@ -14,7 +14,8 @@ class App extends Component {
   }
 
   handleLogin = (data) => {
-    console.log("App", data);
+    console.log("onLogin: ", data);
+    this.setState({user: data});
     isAuth = true;
   };
 
@@ -36,7 +37,14 @@ class App extends Component {
         />
 
         {this.state.isAuthenticated && <h1>MENU</h1>}
-        <PrivateRoute exact path="/" component={Test} />
+        <PrivateRoute exact path="/"
+                      component={ props => (
+                        <Test
+                          {...props}
+                          user={this.state.user}
+                        />
+                      )}
+        />
       </BrowserRouter>
     );
   }
@@ -64,8 +72,8 @@ function PrivateRoute({ component: Component, ...rest }) {
   );
 }
 
-function Test() {
-  return <h2>Test !</h2>;
+function Test({user}) {
+  return (<h2>Test ! {user.email + " " + user.userName}</h2>);
 }
 
 export default App;
